@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>UAP</title>
+    <style>
+      /* CSS styling */
+      table {
+        border-collapse: collapse;
+        width: 300px;
+        margin-bottom: 20px;
+      }
+      th,
+      td {
+        border: 1px solid black;
+        padding: 8px;
+        text-align: left;
+      }
+      th {
+        background-color: #f2f2f2;
+      }
+      input[type="text"] {
+        width: 100%;
+        box-sizing: border-box;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Tabel Kasir</h2>
+    <table id="tabelKasir">
+      <tr>
+        <th>Kode</th>
+        <th>Barang</th>
+        <th>Harga</th>
+      </tr>
+      <tr>
+        <td>001</td>
+        <td>Barang A</td>
+        <td>10000</td>
+      </tr>
+      <tr>
+        <td>002</td>
+        <td>Barang B</td>
+        <td>20000</td>
+      </tr>
+      <tr>
+        <td>003</td>
+        <td>Barang C</td>
+        <td>30000</td>
+      </tr>
+    </table>
+
+    <h2>Inputan User</h2>
+    <table id="tabelInput">
+      <tr>
+        <td><label for="inputKode">Code Barang:</label></td>
+        <td>
+          <input type="text" placeholder="" id="inputKode" />
+        </td>
+      </tr>
+      <tr>
+        <td><label for="inputBanyakBarang">Banyaknya Barang:</label></td>
+        <td>
+          <input type="text" placeholder="" id="inputBanyakBarang" />
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <button onclick="submitData()">Submit</button>
+        </td>
+      </tr>
+    </table>
+
+    <script>
+      function submitData() {
+        var tabelKasir = document.getElementById("tabelKasir");
+        var inputKode = document.getElementById("inputKode").value;
+        var inputBanyakBarang =
+          document.getElementById("inputBanyakBarang").value;
+
+        var rows = tabelKasir.getElementsByTagName("tr");
+        var hargaBarang = "";
+        var found = false;
+
+        for (var i = 1; i < rows.length; i++) {
+          var cells = rows[i].getElementsByTagName("td");
+          if (cells[0].innerText === inputKode) {
+            hargaBarang = cells[2].innerText;
+            found = true;
+            break;
+          }
+        }
+
+        if (found) {
+          var totalHarga = parseInt(hargaBarang) * parseInt(inputBanyakBarang);
+          alert("Total Harga: " + totalHarga);
+
+          var uangBayar = prompt("Masukkan jumlah uang yang akan dibayarkan:");
+
+          if (uangBayar === null) {
+            alert("Pembayaran dibatalkan");
+          } else {
+            uangBayar = parseInt(uangBayar);
+            if (uangBayar >= totalHarga) {
+              var kembalian = uangBayar - totalHarga;
+              alert("Kembalian: " + kembalian);
+            } else {
+              alert("Uang yang dibayarkan kurang!");
+            }
+          }
+        } else {
+          alert("Kode barang tidak ditemukan!");
+        }
+      }
+    </script>
+  </body>
+</html>
